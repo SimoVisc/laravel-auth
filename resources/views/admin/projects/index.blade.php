@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 @section('content')
     <h1>List of Projects</h1>
+    @include('partials.messages')
     <div class="my-4">
         <a class="btn btn-primary text-light" href="{{ route('admin.projects.create') }}">
             Create project
