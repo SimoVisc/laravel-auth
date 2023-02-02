@@ -2,7 +2,7 @@
 @section('content')
     <h1>List of Projects</h1>
     <div class="my-4">
-        <a class="btn btn-warning text-light" href="{{ route('admin.projects.create') }}">
+        <a class="btn btn-primary text-light" href="{{ route('admin.projects.create') }}">
             Create project
         </a>
     </div>
