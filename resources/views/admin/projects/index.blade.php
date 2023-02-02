@@ -25,7 +25,7 @@
                     <td>{{ $project->menager }}</td>
                     <td>{{ $project->slug }}</td>
                     <td class="d-flex">
-                        <a href="{{ route('admin.projects.show', $project) }}" class="btn btn-success mx-2">
+                        <a href="{{ route('admin.projects.show', $project->slug) }}" class="btn btn-success mx-2">
                             <i class="fa-solid fa-circle-info "></i>
                         </a>
                     </td>
