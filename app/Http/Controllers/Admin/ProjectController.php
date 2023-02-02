@@ -90,7 +90,7 @@ class ProjectController extends Controller
         $project->slug = Str::slug($data['name']);
         $project->update($data);
 
-        return redirect()->route('admin.projects.index')->with('message', "The project $project->name was successfully updated!");
+        return redirect()->route('admin.projects.index')->with('message', "The project $old_name was successfully updated!");
     }
 
     /**
@@ -101,6 +101,11 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+        $old_name = $project->name;
+
+        
+        $project->delete();
+
+        return redirect()->route('admin.projects.index')->with('message', "The project $old_name was successfully deleted!");
     }
 }
