@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
@@ -38,8 +39,18 @@ class ProjectController extends Controller
      */
     public function store(StoreProjectRequest $request)
     {
-        //
+        // dd($request);
+        $data = $request->validated();
+
+
+        $new_project = new Project();
+        $new_project->fill($data);
+        $new_project->slug = Str::slug($new_project->name);
+        $new_project->save();
+
+        return redirect()->route('admin.projects.index')->with('message', "The Project $new_project->name was successfully created!");
     }
+    
 
     /**
      * Display the specified resource.
@@ -60,7 +71,7 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        //
+        return view('admin.projects.edit', compact('project'));
     }
 
     /**

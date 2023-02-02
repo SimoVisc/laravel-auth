@@ -29,6 +29,8 @@
                         <a href="{{ route('admin.projects.show', $project) }}" class="btn btn-success mx-2">
                             <i class="fa-solid fa-circle-info "></i>
                         </a>
+                        <a href="{{ route('admin.projects.edit', $project) }}" class="btn btn-warning text-white mx-2"><i
+                                class="fa-solid fa-pen"></i></a>
                     </td>
                 </tr>
             @endforeach
