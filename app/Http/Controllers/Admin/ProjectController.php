@@ -47,10 +47,8 @@ class ProjectController extends Controller
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function show(string $slug)
+    public function show(Project $project)
     {
-       
-        $project= Project::where('slug', $slug)->first();
         return view('admin.projects.show', compact('project'));
     }
 
