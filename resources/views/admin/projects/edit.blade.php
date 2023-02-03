@@ -23,6 +23,45 @@
                         <input type="text" class="form-control" id="menager" name="menager"
                             value="{{ old('description', $project->menager) }}">
                     </div>
+                    <div class="mb-3">
+                        <label for="cover_image" class="form-label">Image</label>
+                        <div>
+                            <img id="output" width="100" class="mb-2"
+                                @if ($project->cover_image) src="{{ asset("storage/$project->cover_image") }}" @endif />
+                            <script>
+                                var loadFile = function(event) {
+                                    var reader = new FileReader();
+                                    reader.onload = function() {
+                                        var output = document.getElementById('output');
+                                        output.src = reader.result;
+                                    };
+                                    reader.readAsDataURL(event.target.files[0]);
+                                };
+                            </script>
+                        </div>
+                        @if ($project->cover_image)
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="no_image"
+                                    name="no_image">
+                                <label class="form-check-label" for="no_image">No Image</label>
+                            </div>
+                        @endif
+
+                        <input type="file" class="form-control" id="cover_image" name="cover_image"
+                            value="{{ old('cover_image') }}" onchange="loadFile(event)">
+
+                        <script>
+                            const inputCheckbox = document.getElementById('no_image');
+                            const inputFile = document.getElementById('cover_image');
+                            inputCheckbox.addEventListener('change', function() {
+                                if (inputCheckbox.checked) {
+                                    inputFile.disabled = true;
+                                } else {
+                                    inputFile.disabled = false;
+                                }
+                            });
+                        </script>
+                    </div>
                     <button type="submit" class="btn btn-primary">Edit</button>
                 </form>
             </div>

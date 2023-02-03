@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ProjectController extends Controller
@@ -39,13 +40,16 @@ class ProjectController extends Controller
      */
     public function store(StoreProjectRequest $request)
     {
-        // dd($request);
+        
         $data = $request->validated();
 
-
+        $img_path= Storage::disk('public')->put('uploads', $data['cover_image']);
+        
+        
         $new_project = new Project();
         $new_project->fill($data);
         $new_project->slug = Str::slug($new_project->name);
+        $new_project->cover_image= $img_path;
         $new_project->save();
 
         return redirect()->route('admin.projects.index')->with('message', "The Project $new_project->name was successfully created!");
@@ -88,6 +92,17 @@ class ProjectController extends Controller
         $old_name = $project->name;
 
         $project->slug = Str::slug($data['name']);
+        if ( isset($data['cover_image']) ) {
+            if( $project->cover_image ) {
+                Storage::delete($project->cover_image);
+            }
+            $data['cover_image'] = Storage::put('uploads', $data['cover_image']);
+        }
+
+        if( isset($data['no_image']) && $project->cover_image  ) {
+            Storage::delete($project->cover_image);
+            $project->cover_image = null;
+        }
         $project->update($data);
 
         return redirect()->route('admin.projects.index')->with('message', "The project $old_name was successfully updated!");
